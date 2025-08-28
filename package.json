@@ -1,0 +1,32 @@
+{
+  "name": "fuyura-board",
+  "version": "0.0.1",
+  "description": "Anonymous posting board for fuyura.com",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fuyura-dev/board-fuyura.git"
+  },
+  "keywords": [
+    "anonymous",
+    "board",
+    "forum",
+    "fuyura"
+  ],
+  "author": "fuyura-dev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fuyura-dev/board-fuyura/issues"
+  },
+  "homepage": "https://github.com/fuyura-dev/board-fuyura#readme",
+  "dependencies": {
+    "@prisma/client": "^6.15.0",
+    "body-parser": "^2.2.0",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "prisma": "^6.15.0"
+  }
+}
