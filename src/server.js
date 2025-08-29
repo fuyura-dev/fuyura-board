@@ -15,11 +15,25 @@ app.get('/', (req, res) => {
 });
 
 app.get('/threads', async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
     const threads = await prisma.thread.findMany({
+        skip,
+        take: limit,
         include: { posts: true },
         orderBy: { updatedAt: 'desc' }
     });
-    res.json(threads);
+
+    const totalThreads = await prisma.thread.count();
+
+    res.json({
+        threads,
+        totalThreads,
+        page,
+        totalPages: Math.ceil(totalThreads / limit)
+    });
 })
 
 app.post('/thread', async (req, res) => {

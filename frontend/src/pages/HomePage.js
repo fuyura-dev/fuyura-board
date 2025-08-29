@@ -8,12 +8,17 @@ import NewThreadModal from '../components/NewThreadModal'
 function HomePage() {
     const [threads, setThreads] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
-        axios.get('http://localhost:3000/threads')
-        .then(res => setThreads(res.data))
+        axios.get(`http://localhost:3000/threads?page=${page}`)
+        .then(res => {
+            setThreads(res.data.threads);
+            setTotalPages(res.data.totalPages);
+        })
         .catch(err => console.error(err));
-    }, []);
+    }, [page]);
 
     return (
         <div className="max-w-2xl mx-auto p-4">
@@ -44,6 +49,24 @@ function HomePage() {
             {showModal && (
                 <NewThreadModal closeModal={() => setShowModal(false)} />
             )}
+
+            <div className="flex justify-center gap-2 mt-6">
+                <button
+                    disabled={page === 1}
+                    onClick={() => setPage(page - 1)}
+                    className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+                >
+                    Prev
+                </button>
+                <span className="px-3 py-1">Page {page} of {totalPages}</span>
+                <button
+                    disabled={page === totalPages}
+                    onClick={() => setPage(page + 1)}
+                    className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+                >
+                    Next
+                </button>
+            </div>
         </div>
     );
 }
