@@ -11,7 +11,7 @@ function ThreadPage () {
     useEffect(() => {
         axios.get('http://localhost:3000/threads')
         .then(res => {
-            const t = res.data.find(th => th.id === parseInt(id));
+            const t = res.data.threads.find(th => th.id === parseInt(id));
             setThread(t);
         });
     }, [id]);
