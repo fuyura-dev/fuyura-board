@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route, Link} from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import ThreadPage from './pages/ThreadPage';
+import NewThreadPage from './pages/NewThreadPage';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <nav style={{ marginBottom: '20px' }}>
+        <Link to="/">Home</Link> | {" "}
+        <Link to="/new">New Thread</Link> | {" "}
+      </nav>
+
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/thread/:id" element={<ThreadPage />} />
+        <Route path="/new" element={<NewThreadPage />} />
+      </Routes>
+
     </div>
   );
 }
