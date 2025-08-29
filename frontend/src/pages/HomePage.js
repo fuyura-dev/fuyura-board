@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { formatDistanceToNow } from 'date-fns';
 
 import NewThreadModal from '../components/NewThreadModal'
 
@@ -32,7 +33,10 @@ function HomePage() {
                     <Link to={`/thread/${t.id}`} className="text-blue-600 font-semibold">
                         {t.title}
                     </Link>
-                    <p className="text-sm text-gray-600">{t.posts.length} replies</p>
+                    <p className="text-sm text-gray-600">
+                        {t.posts.length} replies - Last updated{" "}
+                        {formatDistanceToNow(new Date(t.updatedAt), { addSuffix: true })}
+                    </p>
                     </div>
                 ))}
             </div>

@@ -17,6 +17,7 @@ app.get('/', (req, res) => {
 app.get('/threads', async (req, res) => {
     const threads = await prisma.thread.findMany({
         include: { posts: true },
+        orderBy: { updatedAt: 'desc' }
     });
     res.json(threads);
 })

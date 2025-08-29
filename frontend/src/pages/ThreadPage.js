@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import {useParams } from 'react-router-dom';
 import axios from 'axios';
+import { formatDistanceToNow } from 'date-fns';
 
 function ThreadPage () {
     const { id } = useParams();
@@ -30,7 +31,10 @@ function ThreadPage () {
             <div className="space-y-3 mb-6">
                 {thread.posts.map(p => (
                     <div key={p.id} className="p-3 border rounded-lg bg-gray-50 shadow-sm">
-                        <p className="text-gray-800">{p.content}</p>
+                        <p>{p.content}</p>
+                        <span className="text-xs text-gray-500">
+                            Posted {formatDistanceToNow(new Date(p.createdAt), { addsuffix: true })}
+                        </span>
                     </div>
                 ))}
             </div>
