@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
 
 import NewThreadModal from '../components/NewThreadModal'
+import PaginationControls from '../components/PaginationControls';
 
 function HomePage() {
     const [threads, setThreads] = useState([]);
@@ -32,6 +33,8 @@ function HomePage() {
                 </button>
             </div>
 
+            <PaginationControls page={page} totalPages={totalPages} setPage={setPage} />
+
             <div className="space-y-4">
                 {threads.map(t => (
                     <div key={t.id} className="p-4 border rounded-lg shadow hover:bg-gray-50">
@@ -50,23 +53,7 @@ function HomePage() {
                 <NewThreadModal closeModal={() => setShowModal(false)} />
             )}
 
-            <div className="flex justify-center gap-2 mt-6">
-                <button
-                    disabled={page === 1}
-                    onClick={() => setPage(page - 1)}
-                    className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
-                >
-                    Prev
-                </button>
-                <span className="px-3 py-1">Page {page} of {totalPages}</span>
-                <button
-                    disabled={page === totalPages}
-                    onClick={() => setPage(page + 1)}
-                    className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
-                >
-                    Next
-                </button>
-            </div>
+            <PaginationControls page={page} totalPages={totalPages} setPage={setPage} />
         </div>
     );
 }
