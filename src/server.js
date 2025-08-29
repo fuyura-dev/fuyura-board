@@ -37,6 +37,14 @@ app.post('/thread', async (req, res) => {
     }
 })
 
+app.post('/reply', async (req, res) => {
+    const { threadId, content } = req.body;
+    const post = await prisma.post.create({
+        data: { threadId, content },
+    });
+    res.json(post);
+})
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
