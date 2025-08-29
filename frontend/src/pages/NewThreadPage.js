@@ -8,28 +8,40 @@ function NewThreadPage() {
     const navigate = useNavigate();
 
     const handleSubmit = async () => {
+        if (!title.trim() || !content.trim()) return;
         await axios.post('http://localhost:3000/thread', { title, content });
-        navigate('');
+        navigate('/');
     };
 
     return (
-        <div>
-            <h2>New Thread</h2>
+        <div className="max-w-lg max-auto p-6 bg-white shadow rounded-lg mx-auto">
+            <h2 className="text-2xl font-bold mb-4">Create New Thread</h2>
+
             <input
-                placeholder='Thread title'
+                type="text"
+                placeholder="Thread title"
                 value={title}
                 onChange={e => setTitle(e.target.value)}
+                className="w-full p-2 border rounded-lg mb-3 focus:ring-2 focus:ring-blue-500 outline-none"
             />
-            <br />
+
             <textarea
-                placeholder="First post"
+                placeholder="Write your first post..."
                 value={content}
                 onChange={e => setContent(e.target.value)}
+                className="w-full p-2 border rounded-lg mb-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                rows="5"
             />
-            <br />
-            <button onClick={handleSubmit}>Create Thread</button>
+
+            <button
+                onClick={handleSubmit}
+                className="w-full py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700"
+            >
+                Create Thread
+            </button>
         </div>
-    );
+    )
+
 }
 
 export default NewThreadPage;

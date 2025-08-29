@@ -16,6 +16,7 @@ function ThreadPage () {
     }, [id]);
 
     const handleReply = async () => {
+        if (!reply.trim()) return;
         await axios.post('http://localhost:3000/reply', { threadId: parseInt(id), content: reply });
         window.location.reload();
     };
@@ -23,14 +24,33 @@ function ThreadPage () {
     if (!thread) return <p>Loading...</p>;
 
     return (
-        <div>
-            <h2>{thread.title}</h2>
-            {thread.posts.map(p => (
-                <p key={p.id}>{p.content}</p>
-            ))}
+        <div className="max-w-2xl mx-auto p-4">
+            <h2 className="text-2xl font-bold mb-4">{thread.title}</h2>
 
-            <textarea value={reply} onChange={(e) => setReply(e.target.value)} />
-            <button onClick={handleReply}>Reply</button>
+            <div className="space-y-3 mb-6">
+                {thread.posts.map(p => (
+                    <div key={p.id} className="p-3 border rounded-lg bg-gray-50 shadow-sm">
+                        <p className="text-gray-800">{p.content}</p>
+                    </div>
+                ))}
+            </div>
+
+            <div className="p-4 border rounded-lg bg-white shadow">
+                <h3 className="font-semibold mb-2">Write a reply</h3>
+                <textarea
+                    value={reply}
+                    onChange={(e) => setReply(e.target.value)}
+                    className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                    rows="4"
+                    placeholder="Write your reply..."
+                />
+                <button
+                    onClick={handleReply}
+                    className="mt-3 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                >
+                    Reply
+                </button>
+            </div>
         </div>
     );
 }
