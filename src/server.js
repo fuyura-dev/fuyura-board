@@ -38,16 +38,36 @@ app.get('/threads', async (req, res) => {
 
 app.get('/threads/:id', async (req, res) => {
     const { id } = req.params;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
     const thread = await prisma.thread.findUnique({
         where: { id: parseInt(id) },
-        include: { posts: true }
     });
 
     if (!thread) {
         return res.status(404).json({ message: "Thread not found." });
     }
 
-    res.json(thread);
+    const posts = await prisma.post.findMany({
+        where: { threadId: parseInt(id) },
+        orderBy: { createdAt: "asc"},
+        skip,
+        take: limit,
+    });
+
+    const totalPosts = await prisma.post.count({
+        where: { threadId: parseInt(id) },
+    });
+
+    res.json({
+        ...thread,
+        posts,
+        totalPosts,
+        page,
+        totalPages: Math.ceil(totalPosts / limit),
+    });
 })
 
 app.post('/thread', async (req, res) => {

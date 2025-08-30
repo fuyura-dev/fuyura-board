@@ -3,18 +3,23 @@ import {useParams } from 'react-router-dom';
 import axios from 'axios';
 import { formatDistanceToNow } from 'date-fns';
 
+import PaginationControls from '../components/PaginationControls'
+
 function ThreadPage () {
     const { id } = useParams();
     const [thread, setThread] = useState(null);
     const [reply, setReply] = useState('');
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/threads/${id}`)
+        axios.get(`http://localhost:3000/threads/${id}?page=${page}`)
         .then(res => {
             setThread(res.data);
+            setTotalPages(res.data.totalPages);
         })
         .catch(err => console.error(err));
-    }, [id]);
+    }, [id, page]);
 
     const handleReply = async () => {
         if (!reply.trim()) return;
@@ -32,8 +37,8 @@ function ThreadPage () {
     return (
         <div className="max-w-2xl mx-auto p-4">
             <h2 className="text-2xl font-bold mb-4 bg-gray-100 rounded-lg shadow-md px-2 py-1 text-center">{thread.title}</h2>
-
             <div className="space-y-3 mb-6">
+                <PaginationControls page={page} totalPages={totalPages} setPage={setPage} />
                 {thread.posts.map(p => (
                     <div key={p.id} className="p-3 border rounded-lg bg-gray-50 shadow-sm">
                         <p>{p.content}</p>
@@ -42,6 +47,7 @@ function ThreadPage () {
                         </span>
                     </div>
                 ))}
+                <PaginationControls page={page} totalPages={totalPages} setPage={setPage} />
             </div>
 
             <div className="p-4 border rounded-lg bg-white shadow">
