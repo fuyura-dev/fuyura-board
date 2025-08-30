@@ -14,36 +14,57 @@ app.get('/', (req, res) => {
     res.send('Server is running');
 });
 
-app.get('/threads', async (req, res) => {
+app.get('/categories', async (req, res) => {
+    const categories = await prisma.category.findMany();
+    res.json(categories);
+})
+
+app.get('/:code/threads', async (req, res) => {
+    const { code } = req.params;
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
 
+    const category = await prisma.category.findUnique({
+        where : { code }
+    });
+
+    if (!category) return res.status(404).json({ message: "Category not found "});
+
     const threads = await prisma.thread.findMany({
+        where: { categoryId: category.id },
         skip,
         take: limit,
         include: { posts: true },
         orderBy: { updatedAt: 'desc' }
     });
 
-    const totalThreads = await prisma.thread.count();
+    const totalThreads = await prisma.thread.count({
+        where: { categoryId: category.id },
+    });
 
     res.json({
+        category,
         threads,
-        totalThreads,
         page,
         totalPages: Math.ceil(totalThreads / limit)
     });
 })
 
-app.get('/threads/:id', async (req, res) => {
-    const { id } = req.params;
+app.get('/:code/threads/:id', async (req, res) => {
+    const { id, code } = req.params;
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
 
-    const thread = await prisma.thread.findUnique({
-        where: { id: parseInt(id) },
+    const category = await prisma.category.findUnique({
+        where: { code }
+    });
+
+    if (!category) return res.status(404).json({ message: "Category not found."});
+
+    const thread = await prisma.thread.findFirst({
+        where: { id: parseInt(id), categoryId: category.id },
     });
 
     if (!thread) {
@@ -70,7 +91,7 @@ app.get('/threads/:id', async (req, res) => {
     });
 })
 
-app.post('/thread', async (req, res) => {
+app.post('/:code/thread', async (req, res) => {
     const { title, content } = req.body;
 
     try {

@@ -1,6 +1,8 @@
 import { Routes, Route, Link} from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import ThreadPage from './pages/ThreadPage';
+import CategoryPage from './pages/CategoryPage';
+
 import NewThreadPage from './pages/NewThreadPage';
 
 function App() {
@@ -15,7 +17,8 @@ function App() {
 
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/thread/:id" element={<ThreadPage />} />
+        <Route path="/:code" element={<CategoryPage />} />
+        <Route path="/:code/thread/:id" element={<ThreadPage />} />
         <Route path="/new" element={<NewThreadPage />} />
       </Routes>
 

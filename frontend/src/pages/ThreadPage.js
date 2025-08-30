@@ -6,20 +6,20 @@ import { formatDistanceToNow } from 'date-fns';
 import PaginationControls from '../components/PaginationControls'
 
 function ThreadPage () {
-    const { id } = useParams();
+    const { id, code } = useParams();
     const [thread, setThread] = useState(null);
     const [reply, setReply] = useState('');
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/threads/${id}?page=${page}`)
+        axios.get(`http://localhost:3000/${code}/threads/${id}?page=${page}`)
         .then(res => {
             setThread(res.data);
             setTotalPages(res.data.totalPages);
         })
         .catch(err => console.error(err));
-    }, [id, page]);
+    }, [id, page, code]);
 
     const handleReply = async () => {
         if (!reply.trim()) return;
