@@ -92,6 +92,7 @@ app.get('/:code/threads/:id', async (req, res) => {
 })
 
 app.post('/:code/thread', async (req, res) => {
+    const { code } = req.params;
     const { title, content } = req.body;
 
     try {
@@ -99,6 +100,7 @@ app.post('/:code/thread', async (req, res) => {
             data: {
                 title,
                 posts: { create: { content } },
+                category: { connect: { code }}
             },
             include : { posts: true },
         });

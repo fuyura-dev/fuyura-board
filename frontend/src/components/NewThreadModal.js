@@ -1,13 +1,15 @@
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 function NewThreadModal({ closeModal }) {
+    const { code } = useParams();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
 
     const handleSubmit = async () => {
         if (!title.trim() || !content.trim()) return;
-        await axios.post('http://localhost:3000/thread', { title, content });
+        await axios.post(`http://localhost:3000/${code}/thread`, { title, content });
         window.location.reload();
     };
 
