@@ -9,8 +9,8 @@ function App() {
       <h1 className="text-3xl font-bold my-4 text-center">Fuyura Board</h1>
       
       <nav className="flex justify-center space-x-4 mb-6">
-        <Link to="/" className="text-blue-600 hover:underline">Home</Link>
-        <Link to="/new" className="text-blue-600 hover:underline">New Thread</Link>
+        <Link to="/" className="text-white hover:bg-blue-500 bg-blue-400 px-2 py-1 rounded-lg">Home</Link>
+        <Link to="/new" className="text-white hover:bg-blue-500 bg-blue-400 px-2 py-1 rounded-lg">New Thread</Link>
       </nav>
 
       <Routes>

@@ -13,6 +13,14 @@ function HomePage() {
     const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
+        if (showModal) {
+            document.body.classList.add('modal-open');
+        } else {
+            document.body.classList.remove('modal-open');
+        }
+    }, [showModal]);
+
+    useEffect(() => {
         axios.get(`http://localhost:3000/threads?page=${page}`)
         .then(res => {
             setThreads(res.data.threads);
@@ -37,7 +45,7 @@ function HomePage() {
 
             <div className="space-y-4">
                 {threads.map(t => (
-                    <div key={t.id} className="p-4 border rounded-lg shadow hover:bg-gray-50">
+                    <div key={t.id} className="p-4 border rounded-lg shadow hover:bg-gray-50 bg-sky-100">
                     <Link to={`/thread/${t.id}`} className="text-blue-600 font-semibold">
                         {t.title}
                     </Link>

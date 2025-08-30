@@ -22,11 +22,16 @@ function ThreadPage () {
         window.location.reload();
     };
 
-    if (!thread) return <p>Loading...</p>;
+    if (!thread) return (
+        <div className="flex justify-center items-center space-x-2">
+            <div className="w-6 h-6 border-4 border-t-transparent border-blue-500 rounded-full animate-spin"></div>
+            <p className="text-center text-gray-600">Loading...</p>
+        </div>
+    )
 
     return (
         <div className="max-w-2xl mx-auto p-4">
-            <h2 className="text-2xl font-bold mb-4">{thread.title}</h2>
+            <h2 className="text-2xl font-bold mb-4 bg-gray-100 rounded-lg shadow-md px-2 py-1 text-center">{thread.title}</h2>
 
             <div className="space-y-3 mb-6">
                 {thread.posts.map(p => (
