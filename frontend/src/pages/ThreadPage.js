@@ -9,11 +9,11 @@ function ThreadPage () {
     const [reply, setReply] = useState('');
 
     useEffect(() => {
-        axios.get('http://localhost:3000/threads')
+        axios.get(`http://localhost:3000/threads/${id}`)
         .then(res => {
-            const t = res.data.threads.find(th => th.id === parseInt(id));
-            setThread(t);
-        });
+            setThread(res.data);
+        })
+        .catch(err => console.error(err));
     }, [id]);
 
     const handleReply = async () => {

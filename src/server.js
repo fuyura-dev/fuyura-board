@@ -36,6 +36,20 @@ app.get('/threads', async (req, res) => {
     });
 })
 
+app.get('/threads/:id', async (req, res) => {
+    const { id } = req.params;
+    const thread = await prisma.thread.findUnique({
+        where: { id: parseInt(id) },
+        include: { posts: true }
+    });
+
+    if (!thread) {
+        return res.status(404).json({ message: "Thread not found." });
+    }
+
+    res.json(thread);
+})
+
 app.post('/thread', async (req, res) => {
     const { title, content } = req.body;
 
