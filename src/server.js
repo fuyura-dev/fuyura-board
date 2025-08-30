@@ -72,9 +72,16 @@ app.post('/reply', async (req, res) => {
     const { threadId, content } = req.body;
 
     try {
-        const post = await prisma.post.create({
-            data: { threadId, content },
-        });
+        const [post] = await prisma.$transaction([
+            prisma.post.create({
+                data: { threadId, content },
+            }),
+            prisma.thread.update({
+                where: { id: threadId },
+                data: { updatedAt: new Date() },
+            })
+        ]);
+
         res.json(post);
     } catch (error) {
         console.error(error);
