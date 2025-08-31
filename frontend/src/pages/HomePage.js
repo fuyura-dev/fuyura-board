@@ -18,7 +18,7 @@ function HomePage() {
                 {categories.map(cat => (
                     <Link
                         key={cat.id}
-                        to={`/${cat.code}`}
+                        to={`/${cat.code}/threads`}
                         className="block p-6 rounded-xl shadow bg-white hover:bg-gray-100"
                     >
                         <h2 className="text-xl font-semibold">{cat.name}</h2>
