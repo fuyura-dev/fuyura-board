@@ -23,8 +23,16 @@ function ThreadPage () {
 
     const handleReply = async () => {
         if (!reply.trim()) return;
-        await axios.post('http://localhost:3000/reply', { threadId: parseInt(id), content: reply });
-        window.location.reload();
+        const res = await axios.post('http://localhost:3000/reply', {
+            threadId: parseInt(id),
+            content: reply
+        });
+        setThread(prev => ({
+            ...prev,
+            posts: [...prev.posts, res.data],
+            totalPosts: prev.totalPosts + 1,
+        }));
+        setReply('');
     };
 
     if (!thread) return (
