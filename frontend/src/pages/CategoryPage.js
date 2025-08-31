@@ -57,21 +57,21 @@ function CategoryPage() {
 
       <div className="space-y-4">
         {threads.map((t) => (
-          <div
+          <Link
             key={t.id}
-            className="p-4 border rounded-lg shadow hover:bg-gray-50 bg-sky-100"
+            to={`/${code}/thread/${t.id}`}
+            className="block p-4 border rounded-lg shadow hover:bg-gray-50 bg-sky-100"
           >
-            <Link
-              to={`/${code}/thread/${t.id}`}
-              className="text-blue-600 font-semibold"
-            >
-              {t.title}
-            </Link>
-            <p className="text-sm text-gray-600">
-              {t.posts.length} replies - Last updated{" "}
-              {formatDistanceToNow(new Date(t.updatedAt), { addSuffix: true })}
-            </p>
-          </div>
+            <div>
+              <h2 className="text-blue-600 font-semibold">{t.title}</h2>
+              <p className="text-sm text-gray-600">
+                {t.posts.length} replies - Last updated{" "}
+                {formatDistanceToNow(new Date(t.updatedAt), {
+                  addSuffix: true,
+                })}
+              </p>
+            </div>
+          </Link>
         ))}
       </div>
 
