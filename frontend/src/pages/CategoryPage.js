@@ -13,6 +13,7 @@ function CategoryPage() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [category, setCategory] = useState(null);
+  const [limit, setLimit] = useState(10);
 
   useEffect(() => {
     if (showModal) {
@@ -29,9 +30,12 @@ function CategoryPage() {
         setThreads(res.data.threads);
         setTotalPages(res.data.totalPages);
         setCategory(res.data.category);
+        if (res.data.limit) setLimit(res.data.limit);
       })
       .catch((err) => console.error(err));
   }, [code, page]);
+
+  const showBottomPagination = totalPages > 1 && threads.length === limit;
 
   return (
     <div className="max-w-2xl mx-auto p-4">
@@ -77,11 +81,13 @@ function CategoryPage() {
 
       {showModal && <NewThreadModal closeModal={() => setShowModal(false)} />}
 
-      <PaginationControls
-        page={page}
-        totalPages={totalPages}
-        setPage={setPage}
-      />
+      {showBottomPagination && (
+        <PaginationControls
+          page={page}
+          totalPages={totalPages}
+          setPage={setPage}
+        />
+      )}
     </div>
   );
 }

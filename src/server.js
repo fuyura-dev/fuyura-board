@@ -48,6 +48,8 @@ app.get("/:code/threads", async (req, res) => {
     category,
     threads,
     page,
+    limit,
+    totalThreads,
     totalPages: Math.ceil(totalThreads / limit),
   });
 });
