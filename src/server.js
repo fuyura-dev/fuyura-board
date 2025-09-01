@@ -47,6 +47,7 @@ app.get("/:code/threads", async (req, res) => {
         },
       },
     },
+    orderBy: { updatedAt: "desc" },
   });
 
   const totalThreads = await prisma.thread.count({
