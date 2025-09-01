@@ -53,11 +53,13 @@ function CategoryPage() {
         </button>
       </div>
 
-      <PaginationControls
-        page={page}
-        totalPages={totalPages}
-        setPage={setPage}
-      />
+      {totalPages > 1 && (
+        <PaginationControls
+          page={page}
+          totalPages={totalPages}
+          setPage={setPage}
+        />
+      )}
 
       <div className="space-y-2">
         {threads.map((t) => (
