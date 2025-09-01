@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
 
 function DisclaimerModal() {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(() => {
+    return !localStorage.getItem("disclaimerAccepted");
+  });
+
+  const closeModal = () => {
+    localStorage.setItem("disclaimerAccepted", "true");
+    setIsOpen(false);
+  };
 
   if (!isOpen) return null;
 
@@ -14,7 +21,7 @@ function DisclaimerModal() {
           downtime, or incomplete features.
         </p>
         <button
-          onClick={() => setIsOpen(false)}
+          onClick={() => closeModal()}
           className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl"
         >
           I Understand
