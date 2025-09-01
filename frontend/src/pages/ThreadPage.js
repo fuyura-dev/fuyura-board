@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow, set } from "date-fns";
 
 import PaginationControls from "../components/PaginationControls";
 
@@ -34,6 +34,7 @@ function ThreadPage() {
       totalPosts: prev.totalPosts + 1,
     }));
     setReply("");
+    setPage(totalPages);
   };
 
   if (!thread)
