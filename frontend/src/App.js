@@ -2,12 +2,14 @@ import { Routes, Route, Link } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import ThreadPage from "./pages/ThreadPage";
 import CategoryPage from "./pages/CategoryPage";
+import DisclaimerModal from "./components/DisclaimerModal";
 
 import NewThreadPage from "./pages/NewThreadPage";
 
 function App() {
   return (
     <div className="max-w-4xl mx-auto p-4">
+      <DisclaimerModal />
       <Link to="/" className="text-3xl font-bold my-4 text-center block">
         Fuyura Board
       </Link>
