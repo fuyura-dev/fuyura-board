@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { formatDistanceToNow, set } from "date-fns";
+import { Link } from "react-router-dom";
 
 import PaginationControls from "../components/PaginationControls";
 
@@ -47,9 +48,19 @@ function ThreadPage() {
 
   return (
     <div className="max-w-2xl mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4 bg-gray-100 rounded-lg shadow-md px-3 py-2 text-center w-fit mx-auto">
-        {thread.title}
-      </h2>
+      <div className="flex items-center justify-center relative">
+        <div className="absolute left-0">
+          <Link
+            to={`/${code}/thread`}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            ← Back
+          </Link>
+        </div>
+        <h2 className="text-2xl font-bold bg-gray-100 rounded-lg shadow-md px-3 py-2 text-center">
+          {thread.title}
+        </h2>
+      </div>
       <div className="space-y-3 mb-6">
         <PaginationControls
           page={page}
