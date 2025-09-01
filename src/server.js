@@ -36,8 +36,17 @@ app.get("/:code/threads", async (req, res) => {
     where: { categoryId: category.id },
     skip,
     take: limit,
-    include: { posts: true },
-    orderBy: { updatedAt: "desc" },
+    include: {
+      posts: {
+        orderBy: { createdAt: "desc" },
+        take: 3,
+        select: {
+          id: true,
+          content: true,
+          createdAt: true,
+        },
+      },
+    },
   });
 
   const totalThreads = await prisma.thread.count({

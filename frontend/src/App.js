@@ -10,11 +10,11 @@ function App() {
   return (
     <div className="max-w-4xl mx-auto p-4">
       <DisclaimerModal />
-      <Link to="/" className="text-3xl font-bold my-4 text-center block">
+      <Link to="/" className="text-3xl font-bold my-2 text-center block">
         Fuyura Board
       </Link>
 
-      <nav className="flex justify-center space-x-4 mb-6">
+      <nav className="flex justify-center space-x-4 mb-1">
         <Link
           to="/"
           className="text-white hover:bg-blue-500 bg-blue-400 px-2 py-1 rounded-lg"

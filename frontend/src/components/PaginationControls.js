@@ -1,6 +1,6 @@
 function PaginationControls({ page, totalPages, setPage }) {
   return (
-    <div className="flex justify-center gap-2 m-6">
+    <div className="flex justify-center gap-2 m-2">
       <button
         disabled={page === 1}
         onClick={() => setPage(page - 1)}

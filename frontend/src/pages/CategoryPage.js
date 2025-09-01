@@ -38,8 +38,8 @@ function CategoryPage() {
   const showBottomPagination = totalPages > 1 && threads.length === limit;
 
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      <div className="flex justify-between items-center mb-4">
+    <div className="max-w-2xl mx-auto p-1">
+      <div className="flex justify-between items-center">
         {category && (
           <h2 className="text-xl font-bold">
             /{category.code}/ - {category.name}
@@ -59,21 +59,40 @@ function CategoryPage() {
         setPage={setPage}
       />
 
-      <div className="space-y-4">
+      <div className="space-y-2">
         {threads.map((t) => (
           <Link
             key={t.id}
             to={`/${code}/thread/${t.id}`}
-            className="block p-4 border rounded-lg shadow hover:bg-gray-50 bg-sky-100"
+            className="block px-3 py-1 border rounded-lg shadow hover:bg-gray-50 bg-sky-100"
           >
             <div>
-              <h2 className="text-blue-600 font-semibold">{t.title}</h2>
-              <p className="text-sm text-gray-600">
-                {t.posts.length} replies - Last updated{" "}
-                {formatDistanceToNow(new Date(t.updatedAt), {
-                  addSuffix: true,
-                })}
-              </p>
+              <h2 className="text-blue-600 font-semibold text-xl">
+                {t.title}{" "}
+                <span
+                  className="text-gray-600 font-normal"
+                  style={{ fontSize: "0.7rem" }}
+                >
+                  {" - "}
+                  {t.posts.length} replies - Last updated{" "}
+                  {formatDistanceToNow(new Date(t.updatedAt), {
+                    addSuffix: true,
+                  })}
+                </span>
+              </h2>
+              <div>
+                {t.posts.map((p) => (
+                  <p
+                    key={p.id}
+                    className="text-gray-700 truncate"
+                    style={{ fontSize: "0.8rem" }}
+                    title={p.content}
+                  >
+                    {"- "}
+                    {p.content}
+                  </p>
+                ))}
+              </div>
             </div>
           </Link>
         ))}
