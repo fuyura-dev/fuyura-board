@@ -72,7 +72,7 @@ function ThreadPage() {
             key={p.id}
             className="p-3 border rounded-lg bg-gray-50 shadow-sm"
           >
-            <p>{p.content}</p>
+            <p className="break-words">{p.content}</p>
             <span className="text-xs text-gray-500">
               Posted{" "}
               {formatDistanceToNow(new Date(p.createdAt), { addSuffix: true })}
