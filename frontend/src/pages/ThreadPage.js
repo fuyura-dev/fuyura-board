@@ -79,11 +79,13 @@ function ThreadPage() {
             </span>
           </div>
         ))}
-        <PaginationControls
-          page={page}
-          totalPages={totalPages}
-          setPage={setPage}
-        />
+        {totalPages > 1 && (
+          <PaginationControls
+            page={page}
+            totalPages={totalPages}
+            setPage={setPage}
+          />
+        )}
       </div>
 
       <div className="p-4 border rounded-lg bg-white shadow">
