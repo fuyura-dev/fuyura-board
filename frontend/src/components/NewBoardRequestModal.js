@@ -21,7 +21,7 @@ function NewBoardRequestModal({ closeModal }) {
 
     try {
       setLoading(true);
-      await axios.post("http://localhost:3000/requests", form);
+      await axios.post("http://localhost:3000/request", form);
       setSuccess(true);
       setForm({ category: "", board: "", boardCode: "", description: "" });
     } catch (err) {

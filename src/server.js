@@ -153,7 +153,7 @@ app.get("/requests", async (req, res) => {
   res.json(requests);
 });
 
-app.post("/requests", async (req, res) => {
+app.post("/request", async (req, res) => {
   const { category, board, boardCode, description } = req.body;
   const newRequest = await prisma.request.create({
     data: { category, board, boardCode, description },
