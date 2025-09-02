@@ -1,10 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
 
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 function NewBoardRequestModal({ closeModal }) {
   const [form, setForm] = useState({
     category: "",
