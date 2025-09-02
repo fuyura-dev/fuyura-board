@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function NewBoardRequestModal({ closeModal }) {
   const [form, setForm] = useState({
@@ -34,10 +35,14 @@ function NewBoardRequestModal({ closeModal }) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 items-center justify-center flex">
       <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-md">
-        <h2 className="text-xl font-bold mb-4 text-center">
-          Request a New Board
-        </h2>
-
+        <h2 className="text-xl font-bold text-center">Request a New Board</h2>
+        <Link
+          className="text-blue-600 hover:underline block text-center"
+          to="/requests"
+          onClick={closeModal}
+        >
+          View Requests Here
+        </Link>
         {success ? (
           <div className="text-center">
             <p className="text-green-600 font-medium mb-4">
@@ -65,7 +70,9 @@ function NewBoardRequestModal({ closeModal }) {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Board Name</label>
+              <label className="block text-sm font-medium mb-1">
+                Board Name
+              </label>
               <input
                 type="text"
                 name="board"
@@ -77,7 +84,9 @@ function NewBoardRequestModal({ closeModal }) {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Board Code</label>
+              <label className="block text-sm font-medium mb-1">
+                Board Code
+              </label>
               <input
                 type="text"
                 name="boardCode"
@@ -89,7 +98,9 @@ function NewBoardRequestModal({ closeModal }) {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Description</label>
+              <label className="block text-sm font-medium mb-1">
+                Description
+              </label>
               <textarea
                 name="description"
                 placeholder="Optional description..."
