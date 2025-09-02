@@ -37,7 +37,7 @@ function NewBoardRequestModal({ closeModal }) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 items-center justify-center flex">
-      <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-wd">
+      <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-md">
         <h2 className="text-xl font-bold mb-4 text-center">
           Request a New Board
         </h2>
@@ -56,41 +56,53 @@ function NewBoardRequestModal({ closeModal }) {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-3">
-            <input
-              type="text"
-              name="category"
-              placeholder="Category (e.g. Interests)"
-              value={form.category}
-              onChange={handleChange}
-              required
-              className="w-full p-2 border rounded-lg"
-            />
-            <input
-              type="text"
-              name="board"
-              placeholder="Board Name (e.g. Technology)"
-              value={form.board}
-              onChange={handleChange}
-              required
-              className="w-full p-2 border rounded-lg"
-            />
-            <input
-              type="text"
-              name="boardCode"
-              placeholder="Board Code (e.g. /g/)"
-              value={form.boardCode}
-              onChange={handleChange}
-              required
-              className="w-full p-2 border rounded-lg"
-            />
-            <textarea
-              name="description"
-              placeholder="Optional description..."
-              value={form.description}
-              onChange={handleChange}
-              className="w-full p-2 border rounded-lg"
-              rows="3"
-            />
+            <div>
+              <label className="block text-sm font-medium mb-1">Category</label>
+              <input
+                type="text"
+                name="category"
+                placeholder="Category (e.g. Interests)"
+                value={form.category}
+                onChange={handleChange}
+                required
+                className="w-full p-2 border rounded-lg"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Board Name</label>
+              <input
+                type="text"
+                name="board"
+                placeholder="Board Name (e.g. Technology)"
+                value={form.board}
+                onChange={handleChange}
+                required
+                className="w-full p-2 border rounded-lg"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Board Code</label>
+              <input
+                type="text"
+                name="boardCode"
+                placeholder="Board Code (e.g. /g/)"
+                value={form.boardCode}
+                onChange={handleChange}
+                required
+                className="w-full p-2 border rounded-lg"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Description</label>
+              <textarea
+                name="description"
+                placeholder="Optional description..."
+                value={form.description}
+                onChange={handleChange}
+                className="w-full p-2 border rounded-lg"
+                rows="3"
+              />
+            </div>
 
             <div className="flex justify-center space-x-2">
               <button
