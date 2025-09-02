@@ -27,8 +27,8 @@ function App() {
 
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/:code/thread" element={<CategoryPage />} />
-          <Route path="/:code/thread/:id" element={<ThreadPage />} />
+          <Route path="/:code" element={<CategoryPage />} />
+          <Route path="/:code/:id" element={<ThreadPage />} />
           <Route path="/new" element={<NewThreadPage />} />
         </Routes>
       </div>

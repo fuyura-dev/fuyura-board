@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { formatDistanceToNow, set } from "date-fns";
+import { formatDistanceToNow } from "date-fns";
 import { Link } from "react-router-dom";
 
 import PaginationControls from "../components/PaginationControls";
@@ -51,7 +51,7 @@ function ThreadPage() {
       <div className="flex items-center justify-center relative">
         <div className="absolute left-0">
           <Link
-            to={`/${code}/thread`}
+            to={`/${code}`}
             className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
           >
             ← Back

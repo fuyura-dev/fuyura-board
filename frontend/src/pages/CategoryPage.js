@@ -65,7 +65,7 @@ function CategoryPage() {
         {threads.map((t) => (
           <Link
             key={t.id}
-            to={`/${code}/thread/${t.id}`}
+            to={`/${code}/${t.id}`}
             className="block px-3 py-1 border rounded-lg shadow hover:bg-gray-50 bg-sky-100"
           >
             <div>

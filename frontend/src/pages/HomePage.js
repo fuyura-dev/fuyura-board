@@ -12,7 +12,7 @@ function HomePage() {
         <div className="flex flex-wrap gap-2 mx-auto justify-center">
           <Link
             key="gen"
-            to={`/gen/thread`}
+            to={`/gen`}
             className="block py-1 px-2 bg-gray-100 rounded-xl shadow hover:bg-gray-200 transition"
           >
             <span className="font-bold text-sm">/gen/ - General</span>
@@ -31,7 +31,7 @@ function HomePage() {
               {cat.boards.map((board) => (
                 <Link
                   key={board.code}
-                  to={`/${board.code}/thread`}
+                  to={`/${board.code}`}
                   className="block py-1 px-2 bg-gray-100 rounded-xl shadow hover:bg-gray-200 transition"
                 >
                   <span className="font-bold text-sm">
