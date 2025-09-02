@@ -146,6 +146,29 @@ app.post("/reply", async (req, res) => {
   }
 });
 
+app.get("/requests", async (req, res) => {
+  const requests = await prisma.request.findMany({
+    orderBy: { votes: "desc" },
+  });
+  res.json(requests);
+});
+
+app.post("/requests", async (req, res) => {
+  const { category, board, boardCode, description } = req.body;
+  const newRequest = await prisma.request.create({
+    data: { category, board, boardCode, description },
+  });
+  res.json(newRequest);
+});
+
+app.post("/requests/:id/upvote", async (req, res) => {
+  const updated = await prisma.request.update({
+    where: { id: parseInt(req.params.id) },
+    data: { votes: { increment: 1 } },
+  });
+  res.json(updated);
+});
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

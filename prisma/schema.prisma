@@ -38,3 +38,13 @@ model Post {
   createdAt DateTime @default(now())
   thread    Thread   @relation(fields: [threadId], references: [id])
 }
+
+model Request {
+  id          Int      @id @default(autoincrement())
+  category    String
+  board       String
+  baordCode   String
+  description String?
+  votes       Int      @default(0)
+  createdAt   DateTime @default(now())
+}
