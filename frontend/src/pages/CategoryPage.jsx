@@ -41,15 +41,15 @@ function CategoryPage() {
 
   if (!board)
     return (
-      <div className="flex justify-center items-center space-x-2">
-        <div className="w-6 h-6 border-4 border-t-transparent border-blue-500 rounded-full animate-spin"></div>
-        <p className="text-center text-gray-600">Loading...</p>
+      <div className="flex flex-col items-center justify-center h-screen space-y-4">
+        <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        <p className="text-gray-600 text-sm font-medium">Loading...</p>
       </div>
     );
 
   return (
     <div className="max-w-2xl mx-auto p-1">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center mb-2">
         {board && (
           <h2 className="text-xl font-bold">
             /{board.code}/ - {board.name}
