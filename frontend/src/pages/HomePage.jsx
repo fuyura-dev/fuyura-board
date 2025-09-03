@@ -20,6 +20,14 @@ function HomePage() {
       });
   }, [API_URL]);
 
+  if (!categories)
+    return (
+      <div className="flex justify-center items-center space-x-2">
+        <div className="w-6 h-6 border-4 border-t-transparent border-blue-500 rounded-full animate-spin"></div>
+        <p className="text-center text-gray-600">Loading...</p>
+      </div>
+    );
+
   return (
     <div className="p-6">
       <div className="mb-4 border py-4 px-10 rounded-lg border-white bg-blue-200 w-fit text-center mx-auto">
