@@ -14,7 +14,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Category {
+model Board {
   id      Int      @id @default(autoincrement())
   code    String   @unique
   name    String
@@ -22,13 +22,13 @@ model Category {
 }
 
 model Thread {
-  id         Int      @id @default(autoincrement())
-  title      String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  posts      Post[]
-  categoryId Int
-  category   Category @relation(fields: [categoryId], references: [id])
+  id        Int      @id @default(autoincrement())
+  title     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  posts     Post[]
+  boardId   Int
+  board     Board    @relation(fields: [boardId], references: [id])
 }
 
 model Post {
