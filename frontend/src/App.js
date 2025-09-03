@@ -8,7 +8,6 @@ import DisclaimerModal from "./components/DisclaimerModal";
 import ScrollToTopButton from "./components/ScrollToTopButton";
 import NewBoardRequestModal from "./components/NewBoardRequestModal";
 
-import NewThreadPage from "./pages/NewThreadPage";
 import RequestsPage from "./pages/RequestsPage";
 
 function App() {
@@ -48,7 +47,6 @@ function App() {
           <Route path="/:code" element={<CategoryPage />} />
           <Route path="/:code/:id" element={<ThreadPage />} />
           <Route path="/requests" element={<RequestsPage />} />
-          {/* <Route path="/new" element={<NewThreadPage />} /> */}
         </Routes>
       </div>
       <ScrollToTopButton />

@@ -2,14 +2,16 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 function RequestsPage() {
+  const API_URL = process.env.REACT_APP_API_URL;
+
   const [requests, setRequests] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/requests")
+      .get(`${API_URL}/requests`)
       .then((res) => setRequests(res.data))
       .catch((err) => console.error("Error fetching requests:", err));
-  }, []);
+  }, [API_URL]);
 
   const handleUpvote = async (id) => {
 

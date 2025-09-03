@@ -7,6 +7,8 @@ import NewThreadModal from "../components/NewThreadModal";
 import PaginationControls from "../components/PaginationControls";
 
 function CategoryPage() {
+  const API_URL = process.env.REACT_APP_API_URL;
+
   const { code } = useParams();
   const [threads, setThreads] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -25,7 +27,7 @@ function CategoryPage() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/${code}/threads?page=${page}`)
+      .get(`${API_URL}/${code}/threads?page=${page}`)
       .then((res) => {
         setThreads(res.data.threads);
         setTotalPages(res.data.totalPages);
@@ -33,7 +35,7 @@ function CategoryPage() {
         if (res.data.limit) setLimit(res.data.limit);
       })
       .catch((err) => console.error(err));
-  }, [code, page]);
+  }, [code, page, API_URL]);
 
   const showBottomPagination = totalPages > 1 && threads.length === limit;
 

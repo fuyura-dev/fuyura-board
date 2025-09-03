@@ -3,6 +3,8 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 function NewBoardRequestModal({ closeModal }) {
+  const API_URL = process.env.REACT_APP_API_URL;
+
   const [form, setForm] = useState({
     category: "",
     board: "",
@@ -22,7 +24,7 @@ function NewBoardRequestModal({ closeModal }) {
 
     try {
       setLoading(true);
-      await axios.post("http://localhost:3000/request", form);
+      await axios.post(`${API_URL}/request`, form);
       setSuccess(true);
       setForm({ category: "", board: "", boardCode: "", description: "" });
     } catch (err) {

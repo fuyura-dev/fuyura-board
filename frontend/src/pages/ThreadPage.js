@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import PaginationControls from "../components/PaginationControls";
 
 function ThreadPage() {
+  const API_URL = process.env.REACT_APP_API_URL;
+
   const { id, code } = useParams();
   const [thread, setThread] = useState(null);
   const [reply, setReply] = useState("");
@@ -15,17 +17,17 @@ function ThreadPage() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/${code}/threads/${id}?page=${page}`)
+      .get(`${API_URL}/${code}/threads/${id}?page=${page}`)
       .then((res) => {
         setThread(res.data);
         setTotalPages(res.data.totalPages);
       })
       .catch((err) => console.error(err));
-  }, [id, page, code]);
+  }, [id, page, code, API_URL]);
 
   const handleReply = async () => {
     if (!reply.trim()) return;
-    const res = await axios.post("http://localhost:3000/reply", {
+    const res = await axios.post(`${API_URL}/reply`, {
       threadId: parseInt(id),
       content: reply,
     });
