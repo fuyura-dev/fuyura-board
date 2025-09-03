@@ -18,7 +18,7 @@ function HomePage() {
         console.error(err);
         navigate("/fallback");
       });
-  }, [API_URL]);
+  }, [API_URL, navigate]);
 
   if (!categories || categories.length === 0)
     return (
