@@ -1,4 +1,4 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 
 import HomePage from "./pages/HomePage";
@@ -9,9 +9,15 @@ import ScrollToTopButton from "./components/ScrollToTopButton";
 import NewBoardRequestModal from "./components/NewBoardRequestModal";
 
 import RequestsPage from "./pages/RequestsPage";
+import FallbackPage from "./pages/FallbackPage";
 
 function App() {
   const [showNewBoardModal, setShowNewBoardModal] = useState(false);
+  const location = useLocation();
+
+  if(location.pathname === "/fallback") {
+    return <FallbackPage />;
+  }
 
   return (
     <>
