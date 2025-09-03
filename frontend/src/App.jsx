@@ -53,6 +53,7 @@ function App() {
           <Route path="/:code" element={<CategoryPage />} />
           <Route path="/:code/:id" element={<ThreadPage />} />
           <Route path="/requests" element={<RequestsPage />} />
+          <Route path="/fallback" element={<FallbackPage />} />
         </Routes>
       </div>
       <ScrollToTopButton />
