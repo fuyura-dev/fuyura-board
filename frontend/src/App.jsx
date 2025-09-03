@@ -1,5 +1,11 @@
-import { Routes, Route, Link, useLocation } from "react-router-dom";
-import { useState } from "react";
+import {
+  Routes,
+  Route,
+  Link,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+import { useEffect, useState } from "react";
 
 import HomePage from "./pages/HomePage";
 import ThreadPage from "./pages/ThreadPage";
@@ -12,10 +18,25 @@ import RequestsPage from "./pages/RequestsPage";
 import FallbackPage from "./pages/FallbackPage";
 
 function App() {
+  const API_URL = process.env.REACT_APP_API_URL;
+  const navigate = useNavigate();
+
   const [showNewBoardModal, setShowNewBoardModal] = useState(false);
   const location = useLocation();
 
-  if(location.pathname === "/fallback") {
+  useEffect(() => {
+    if (location.pathname === "/fallback") return;
+
+    fetch(`${API_URL}/health`)
+      .then((res) => {
+        if (!res.ok) throw new Error();
+      })
+      .catch(() => {
+        navigate("/fallback", { replace: true });
+      });
+  }, [API_URL, navigate, location.pathname]);
+
+  if (location.pathname === "/fallback") {
     return <FallbackPage />;
   }
 
@@ -53,7 +74,6 @@ function App() {
           <Route path="/:code" element={<CategoryPage />} />
           <Route path="/:code/:id" element={<ThreadPage />} />
           <Route path="/requests" element={<RequestsPage />} />
-          <Route path="/fallback" element={<FallbackPage />} />
         </Routes>
       </div>
       <ScrollToTopButton />
