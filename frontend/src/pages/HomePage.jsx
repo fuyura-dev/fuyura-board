@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function HomePage() {
   const API_URL = process.env.REACT_APP_API_URL;
 
   const [categories, setCategories] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -13,7 +14,10 @@ function HomePage() {
       .then((res) => {
         setCategories(res.data);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(err);
+        navigate("/fallback");
+      });
   }, [API_URL]);
 
   return (
