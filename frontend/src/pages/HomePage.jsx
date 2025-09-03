@@ -5,14 +5,15 @@ import { Link, useNavigate } from "react-router-dom";
 function HomePage() {
   const API_URL = process.env.REACT_APP_API_URL;
 
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
       .get(`${API_URL}/categories`)
       .then((res) => {
-        setCategories(res.data);
+        const cats = Array.isArray(res.data) ? res.data : [];
+        setCategories(cats);
       })
       .catch((err) => {
         console.error(err);
@@ -20,7 +21,7 @@ function HomePage() {
       });
   }, [API_URL, navigate]);
 
-  if (!categories || categories.length === 0)
+  if (!categories)
     return (
       <div className="flex justify-center items-center space-x-2">
         <div className="w-6 h-6 border-4 border-t-transparent border-blue-500 rounded-full animate-spin"></div>
