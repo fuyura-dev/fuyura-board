@@ -14,7 +14,7 @@ function CategoryPage() {
   const [showModal, setShowModal] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [category, setCategory] = useState(null);
+  const [board, setBoard] = useState(null);
   const [limit, setLimit] = useState(10);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ function CategoryPage() {
       .then((res) => {
         setThreads(res.data.threads);
         setTotalPages(res.data.totalPages);
-        setCategory(res.data.category);
+        setBoard(res.data.board);
         if (res.data.limit) setLimit(res.data.limit);
       })
       .catch((err) => console.error(err));
@@ -42,9 +42,9 @@ function CategoryPage() {
   return (
     <div className="max-w-2xl mx-auto p-1">
       <div className="flex justify-between items-center">
-        {category && (
+        {board && (
           <h2 className="text-xl font-bold">
-            /{category.code}/ - {category.name}
+            /{board.code}/ - {board.name}
           </h2>
         )}
         <button

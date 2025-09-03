@@ -14,9 +14,9 @@ app.get("/", (req, res) => {
   res.send("Server is running");
 });
 
-app.get("/categories", async (req, res) => {
-  const categories = await prisma.category.findMany();
-  res.json(categories);
+app.get("/boards", async (req, res) => {
+  const boards = await prisma.board.findMany();
+  res.json(boards);
 });
 
 app.get("/:code/threads", async (req, res) => {
@@ -25,15 +25,14 @@ app.get("/:code/threads", async (req, res) => {
   const limit = parseInt(req.query.limit) || 10;
   const skip = (page - 1) * limit;
 
-  const category = await prisma.category.findUnique({
+  const board = await prisma.board.findUnique({
     where: { code },
   });
 
-  if (!category)
-    return res.status(404).json({ message: "Category not found " });
+  if (!board) return res.status(404).json({ message: "Board not found" });
 
   const threads = await prisma.thread.findMany({
-    where: { categoryId: category.id },
+    where: { boardId: board.id },
     skip,
     take: limit,
     include: {
@@ -51,11 +50,11 @@ app.get("/:code/threads", async (req, res) => {
   });
 
   const totalThreads = await prisma.thread.count({
-    where: { categoryId: category.id },
+    where: { boardId: board.id },
   });
 
   res.json({
-    category,
+    board: board,
     threads,
     page,
     limit,
@@ -70,15 +69,14 @@ app.get("/:code/threads/:id", async (req, res) => {
   const limit = parseInt(req.query.limit) || 10;
   const skip = (page - 1) * limit;
 
-  const category = await prisma.category.findUnique({
+  const board = await prisma.board.findUnique({
     where: { code },
   });
 
-  if (!category)
-    return res.status(404).json({ message: "Category not found." });
+  if (!board) return res.status(404).json({ message: "Board not found." });
 
   const thread = await prisma.thread.findFirst({
-    where: { id: parseInt(id), categoryId: category.id },
+    where: { id: parseInt(id), boardId: board.id },
   });
 
   if (!thread) {
@@ -114,7 +112,7 @@ app.post("/:code/thread", async (req, res) => {
       data: {
         title,
         posts: { create: { content } },
-        category: { connect: { code } },
+        board: { connect: { code } },
       },
       include: { posts: true },
     });

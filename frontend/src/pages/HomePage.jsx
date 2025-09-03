@@ -6,7 +6,6 @@ import categories from "../config/categories";
 function HomePage() {
   return (
     <div className="p-6">
-      {/* <h1 className="text-3xl font-bold mb-6">Fuyura Boards</h1> */}
       <div className="mb-4 border py-4 px-10 rounded-lg border-white bg-blue-200 w-fit text-center mx-auto">
         <h2 className="text-lg font-bold mb-3">General</h2>
         <div className="flex flex-wrap gap-2 mx-auto justify-center">
