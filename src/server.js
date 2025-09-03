@@ -14,9 +14,11 @@ app.get("/", (req, res) => {
   res.send("Server is running");
 });
 
-app.get("/boards", async (req, res) => {
-  const boards = await prisma.board.findMany();
-  res.json(boards);
+app.get("/categories", async (req, res) => {
+  const categories = await prisma.category.findMany({
+    include: { boards: true },
+  });
+  res.json(categories);
 });
 
 app.get("/:code/threads", async (req, res) => {
