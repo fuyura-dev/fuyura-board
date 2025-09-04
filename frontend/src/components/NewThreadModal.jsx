@@ -8,14 +8,23 @@ function NewThreadModal({ closeModal }) {
   const { code } = useParams();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
     if (!title.trim() || !content.trim()) return;
-    await axios.post(`${API_URL}/${code}/thread`, {
-      title,
-      content,
-    });
-    window.location.reload();
+
+    try {
+      setLoading(true);
+      await axios.post(`${API_URL}/${code}/thread`, {
+        title,
+        content,
+      });
+      window.location.reload();
+    } catch (err) {
+      console.error("Error creating thread:", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -29,6 +38,7 @@ function NewThreadModal({ closeModal }) {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           className="w-full p-2 border rounded-lg mb-3 focus:ring-2 focus:ring-blue-500 outline-none"
+          disabled={loading}
         />
 
         <textarea
@@ -37,6 +47,7 @@ function NewThreadModal({ closeModal }) {
           onChange={(e) => setContent(e.target.value)}
           className="w-full p-2 border rounded-lg mb-3 focus:ring-2 focus:ring-blue-500 outline-none"
           rows="4"
+          disabled={loading}
         />
 
         <div className="flex justify-end gap-2">
@@ -48,9 +59,10 @@ function NewThreadModal({ closeModal }) {
           </button>
           <button
             onClick={handleSubmit}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+            disabled={loading}
           >
-            Post
+            {loading ? "Posting..." : "Post"}
           </button>
         </div>
       </div>

@@ -14,6 +14,7 @@ function ThreadPage() {
   const [reply, setReply] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     axios
@@ -27,17 +28,24 @@ function ThreadPage() {
 
   const handleReply = async () => {
     if (!reply.trim()) return;
-    const res = await axios.post(`${API_URL}/reply`, {
-      threadId: parseInt(id),
-      content: reply,
-    });
-    setThread((prev) => ({
-      ...prev,
-      posts: [...prev.posts, res.data],
-      totalPosts: prev.totalPosts + 1,
-    }));
-    setReply("");
-    setPage(totalPages);
+    try {
+      setLoading(true);
+      const res = await axios.post(`${API_URL}/reply`, {
+        threadId: parseInt(id),
+        content: reply,
+      });
+      setThread((prev) => ({
+        ...prev,
+        posts: [...prev.posts, res.data],
+        totalPosts: prev.totalPosts + 1,
+      }));
+      setReply("");
+      setPage(totalPages);
+    } catch (err) {
+      console.error("Error posting reply:", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (!thread)
@@ -98,12 +106,14 @@ function ThreadPage() {
           className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
           rows="4"
           placeholder="Write your reply..."
+          disabled={loading}
         />
         <button
           onClick={handleReply}
-          className="mt-3 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          className="mt-3 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+          disabled={loading}
         >
-          Reply
+          {loading ? "Replying..." : "Reply"}
         </button>
       </div>
     </div>
