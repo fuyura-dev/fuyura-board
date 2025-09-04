@@ -61,6 +61,12 @@ function App() {
           >
             Request a Board
           </button>
+          <Link
+            to="/"
+            className="text-white hover:bg-blue-500 bg-blue-400 px-2 py-1 rounded-lg"
+          >
+            About
+          </Link>
         </nav>
 
         {showNewBoardModal && (
