@@ -51,6 +51,7 @@ app.get("/:code/threads", async (req, res) => {
           createdAt: true,
         },
       },
+      _count: { select: { posts: true } },
     },
     orderBy: { updatedAt: "desc" },
   });

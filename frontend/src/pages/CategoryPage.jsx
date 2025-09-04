@@ -86,7 +86,7 @@ function CategoryPage() {
                   style={{ fontSize: "0.7rem" }}
                 >
                   {" - "}
-                  {t.posts.length} replies - Last updated{" "}
+                  {t._count.posts} replies - Last updated{" "}
                   {formatDistanceToNow(new Date(t.updatedAt), {
                     addSuffix: true,
                   })}
