@@ -125,43 +125,6 @@ function CategoryPage() {
             </Link>
           ))
         )}
-
-        {threads.map((t) => (
-          <Link
-            key={t.id}
-            to={`/${code}/${t.id}`}
-            className="block px-3 py-1 border rounded-lg shadow hover:bg-gray-50 bg-sky-100"
-          >
-            <div>
-              <h2 className="text-blue-600 font-semibold text-xl">
-                {t.title}{" "}
-                <span
-                  className="text-gray-600 font-normal"
-                  style={{ fontSize: "0.7rem" }}
-                >
-                  {" - "}
-                  {t._count.posts} replies - Last updated{" "}
-                  {formatDistanceToNow(new Date(t.updatedAt), {
-                    addSuffix: true,
-                  })}
-                </span>
-              </h2>
-              <div>
-                {t.posts.map((p) => (
-                  <p
-                    key={p.id}
-                    className="text-gray-700 truncate"
-                    style={{ fontSize: "0.8rem" }}
-                    title={p.content}
-                  >
-                    {"- "}
-                    {p.content}
-                  </p>
-                ))}
-              </div>
-            </div>
-          </Link>
-        ))}
       </div>
 
       {showModal && <NewThreadModal closeModal={() => setShowModal(false)} />}
