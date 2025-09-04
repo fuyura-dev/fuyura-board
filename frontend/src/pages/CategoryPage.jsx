@@ -72,6 +72,60 @@ function CategoryPage() {
       )}
 
       <div className="space-y-2">
+        {threads.length === 0 ? (
+          <div className="flex flex-col items-center py-16 text-center space-y-3">
+            <p className="text-lg font-semibold text-gray-700">
+              No threads yet
+            </p>
+            <p className="text-sm text-gray-500">
+              Be the first to start a conversation by creating a new thread.
+            </p>
+            <button
+              onClick={() => setShowModal(true)}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+            >
+              Create Thread
+            </button>
+          </div>
+        ) : (
+          threads.map((t) => (
+            <Link
+              key={t.id}
+              to={`/${code}/${t.id}`}
+              className="block px-3 py-1 border rounded-lg shadow hover:bg-gray-50 bg-sky-100"
+            >
+              <div>
+                <h2 className="text-blue-600 font-semibold text-xl">
+                  {t.title}{" "}
+                  <span
+                    className="text-gray-600 font-normal"
+                    style={{ fontSize: "0.7rem" }}
+                  >
+                    {" - "}
+                    {t._count.posts} replies - Last updated{" "}
+                    {formatDistanceToNow(new Date(t.updatedAt), {
+                      addSuffix: true,
+                    })}
+                  </span>
+                </h2>
+                <div>
+                  {t.posts.map((p) => (
+                    <p
+                      key={p.id}
+                      className="text-gray-700 truncate"
+                      style={{ fontSize: "0.8rem" }}
+                      title={p.content}
+                    >
+                      {"- "}
+                      {p.content}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            </Link>
+          ))
+        )}
+
         {threads.map((t) => (
           <Link
             key={t.id}
