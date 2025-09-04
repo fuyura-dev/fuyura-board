@@ -2,11 +2,16 @@ import { useState } from "react";
 
 function DisclaimerModal() {
   const [isOpen, setIsOpen] = useState(() => {
-    return !localStorage.getItem("disclaimerAccepted");
+    const lastAccepted = localStorage.getItem("disclaimerAcceptedAt");
+    if (!lastAccepted) return true;
+
+    const time = 10 * 60 * 1000;
+    const now = Date.now();
+    return now - parseInt(lastAccepted, 10) > time;
   });
 
   const closeModal = () => {
-    localStorage.setItem("disclaimerAccepted", "true");
+    localStorage.setItem("disclaimerAcceptedAt", Date.now().toString());
     setIsOpen(false);
   };
 
