@@ -41,7 +41,7 @@ function RequestsPage() {
             >
               <div>
                 <h3 className="font-semibold text-base">
-                  /{req.boardCode}/ - {req.board}
+                  /{req.boardCode.replace(/^\/|\/$/g, '')}/ - {req.board}
                 </h3>
                 <p className="text-xs text-gray-600">{req.category}</p>
                 {req.description && (
