@@ -15,7 +15,11 @@ function NewBoardRequestModal({ closeModal }) {
   const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const sanitizedValue =
+      e.target.name === "boardCode"
+        ? e.target.value.replace(/\//g, "")
+        : e.target.value;
+    setForm({ ...form, [e.target.name]: sanitizedValue });
   };
 
   const handleSubmit = async (e) => {
