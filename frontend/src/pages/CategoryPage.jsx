@@ -94,33 +94,30 @@ function CategoryPage() {
               to={`/${code}/${t.id}`}
               className="block px-3 py-1 border rounded-lg shadow hover:bg-gray-50 bg-sky-100"
             >
+              <div className="flex items-center justify-between text-sm mb-1 text-gray-600">
+                <span>
+                  <span className="font-medium text-black">No. {t.id}</span> {}
+                  <span className="text-blue-600 font-semibold">{t.title}</span>
+                </span>
+                <span className="text-xs">
+                  {t._count.posts} replies - Last Updated{" "}
+                  {formatDistanceToNow(new Date(t.updatedAt), {
+                    addSuffix: true,
+                  })}
+                </span>
+              </div>
               <div>
-                <h2 className="text-blue-600 font-semibold text-xl">
-                  {t.title}{" "}
-                  <span
-                    className="text-gray-600 font-normal"
-                    style={{ fontSize: "0.7rem" }}
+                {t.posts.map((p) => (
+                  <p
+                    key={p.id}
+                    className="text-gray-700 truncate"
+                    style={{ fontSize: "0.8rem" }}
+                    title={p.content}
                   >
-                    {" - "}
-                    {t._count.posts} replies - Last updated{" "}
-                    {formatDistanceToNow(new Date(t.updatedAt), {
-                      addSuffix: true,
-                    })}
-                  </span>
-                </h2>
-                <div>
-                  {t.posts.map((p) => (
-                    <p
-                      key={p.id}
-                      className="text-gray-700 truncate"
-                      style={{ fontSize: "0.8rem" }}
-                      title={p.content}
-                    >
-                      {"- "}
-                      {p.content}
-                    </p>
-                  ))}
-                </div>
+                    {"- "}
+                    {p.content}
+                  </p>
+                ))}
               </div>
             </Link>
           ))

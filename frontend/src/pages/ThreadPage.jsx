@@ -82,11 +82,21 @@ function ThreadPage() {
             key={p.id}
             className="p-3 border rounded-lg bg-gray-50 shadow-sm"
           >
-            <p className="break-words">{p.content}</p>
-            <span className="text-xs text-gray-500">
-              Posted{" "}
-              {formatDistanceToNow(new Date(p.createdAt), { addSuffix: true })}
-            </span>
+            <div className="flex items-center justify-between text-sm text-gray-600">
+              <span>
+                <span className="font-medium">Anonymous</span> {}
+                <span className="text-gray-500">No. {p.id}</span>
+              </span>
+              <span className="text-xs text-gray-500">
+                Posted{" "}
+                {formatDistanceToNow(new Date(p.createdAt), {
+                  addSuffix: true,
+                })}
+              </span>
+            </div>
+            <p className="break-words mt-1 text-sm leading-relaxed">
+              {p.content}
+            </p>
           </div>
         ))}
         {totalPages > 1 && (
