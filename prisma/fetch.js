@@ -16,9 +16,10 @@ async function fetchThreads(board) {
 
   const pages = await res.json();
 
-  let allThreads = pages.flatMap((page) => page.threads);
-
-  return allThreads.slice(0, THREAD_LIMIT).map((t) => t.no);
+  return pages
+    .flatMap((page) => page.threads)
+    .slice(0, THREAD_LIMIT)
+    .map((t) => t.no);
 }
 
 async function main() {
