@@ -6,26 +6,39 @@ const THREAD_LIMIT = 50;
 const POST_LIMIT = 50;
 const OUTPUT_FILE = "threads.json";
 
-async function getThreadTitle(board, threadId) {
+function extractTitle(op) {
+  if (op.sub) return op.sub;
+
+  if (op.com) return op.com.length > 50 ? op.com.slice(0, 50) + "..." : op.com;
+
+  return null;
+}
+
+async function fetchPosts(board, threadId) {
   const url = `https://a.4cdn.org/${board}/thread/${threadId}.json`;
   const res = await fetch(url);
 
-  if (!res.ok) {
-    throw new Error(`Failed to fetch thread title: ${res.statusText}`);
-  }
+  if (!res.ok)
+    throw new Error(
+      `Failed to fetch posts ${board}/${threadId}: ${res.statusText}`
+    );
 
-  const threadData = await res.json();
-  const op = threadData.posts[0];
+  const data = await res.json();
+  const [op, ...replies] = data.posts;
 
-  if (op.sub) {
-    return op.sub;
-  }
+  const title = extractTitle(op);
+  if (!title) return null;
 
-  if (op.com) {
-    return op.com.length > 50 ? op.com.slice(0, 50) + "..." : op.com;
-  }
-
-  return null;
+  return {
+    board,
+    threadId: op.no,
+    title,
+    content: extractTitle(op),
+    posts: replies.slice(0, POST_LIMIT).map((p) => ({
+      id: p.no,
+      content: p.com,
+    })),
+  };
 }
 
 async function fetchThreads(board) {
@@ -38,46 +51,20 @@ async function fetchThreads(board) {
 
   const pages = await res.json();
 
+  const threadIds = pages.flatMap((page) => page.threads).map((t) => t.no);
+
   const threads = await Promise.all(
-    pages
-      .flatMap((page) => page.threads)
-      .map(async (t) => {
-        const title = await getThreadTitle(board, t.no);
-        if (!title) return null;
-        return { id: t.no, title };
-      })
+    threadIds.map((id) => fetchPosts(board, id))
   );
 
   return threads.filter(Boolean).slice(0, THREAD_LIMIT);
 }
 
-async function fetchPosts(board, threadId) {
-  const url = `https://a.4cdn.org/${board}/thread/${threadId}.json`;
-  const res = await fetch(url);
-
-  if (!res.ok) throw new Error(`Failed to fetch posts ${board}/${threadId}`);
-
-  const data = await res.json();
-
-  const [op, ...replies] = data.posts;
-
-  return {
-    board,
-    threadId: op.no,
-    title: op.sub,
-    content: op.com,
-    posts: replies.slice(0, POST_LIMIT).map((p) => ({
-      id: p.no,
-      content: p.com,
-    })),
-  };
-}
-
 async function main() {
-  const threads = await fetchThreads("a");
-  console.log(threads.length);
-  // const posts = await fetchPosts("a", 282092697);
-  // console.log(posts);
+  // const threads = await fetchThreads("a");
+  // console.log(threads);
+  const posts = await fetchPosts("a", 282092697);
+  console.log(posts);
 }
 
 main();
