@@ -34,10 +34,13 @@ async function fetchPosts(board, threadId) {
     threadId: op.no,
     title,
     content: extractTitle(op),
-    posts: replies.slice(0, POST_LIMIT).map((p) => ({
-      id: p.no,
-      content: p.com,
-    })),
+    posts: replies
+      .filter((p) => p.com)
+      .slice(0, POST_LIMIT)
+      .map((p) => ({
+        id: p.no,
+        content: p.com,
+      })),
   };
 }
 
@@ -61,10 +64,11 @@ async function fetchThreads(board) {
 }
 
 async function main() {
-  // const threads = await fetchThreads("a");
-  // console.log(threads);
-  const posts = await fetchPosts("a", 282092697);
-  console.log(posts);
+  const threads = await fetchThreads("a");
+  console.log(threads);
+  // const posts = await fetchPosts("a", 282092697);
+  // console.log(posts);
+  fs.writeFileSync(OUTPUT_FILE, JSON.stringify(threads, null, 2));
 }
 
 main();
