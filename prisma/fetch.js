@@ -27,13 +27,13 @@ async function fetchPosts(board, threadId) {
   const [op, ...replies] = data.posts;
 
   const title = extractTitle(op);
-  if (!title) return null;
+  if (!title || !op.com) return null;
 
   return {
     board,
     threadId: op.no,
     title,
-    content: extractTitle(op),
+    content: op.com,
     posts: replies
       .filter((p) => p.com)
       .slice(0, POST_LIMIT)
@@ -64,11 +64,12 @@ async function fetchThreads(board) {
 }
 
 async function main() {
-  const threads = await fetchThreads("a");
-  console.log(threads);
-  // const posts = await fetchPosts("a", 282092697);
-  // console.log(posts);
-  fs.writeFileSync(OUTPUT_FILE, JSON.stringify(threads, null, 2));
+  // const threads = await fetchThreads("a");
+  // console.log(threads);
+  const posts = await fetchPosts("a", 282092697);
+  console.log(posts);
+
+  // fs.writeFileSync(OUTPUT_FILE, JSON.stringify(threads, null, 2));
 }
 
 main();
