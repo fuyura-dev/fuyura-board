@@ -3,8 +3,10 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { formatDistanceToNow } from "date-fns";
 import { Link } from "react-router-dom";
+import he from "he";
 
 import PaginationControls from "../components/PaginationControls";
+import PostContent from "../components/PostContent";
 
 function ThreadPage() {
   const API_URL = process.env.REACT_APP_API_URL;
@@ -30,9 +32,10 @@ function ThreadPage() {
     if (!reply.trim()) return;
     try {
       setLoading(true);
+      const safeReply = he.encode(reply);
       const res = await axios.post(`${API_URL}/reply`, {
         threadId: parseInt(id),
-        content: reply,
+        content: safeReply,
       });
       setThread((prev) => ({
         ...prev,
@@ -94,9 +97,9 @@ function ThreadPage() {
                 })}
               </span>
             </div>
-            <p className="break-words mt-1 text-sm leading-relaxed">
-              {p.content}
-            </p>
+            <div className="break-words mt-1 text-sm leading-relaxed">
+              <PostContent content={p.content} />
+            </div>
           </div>
         ))}
         {totalPages > 1 && (
