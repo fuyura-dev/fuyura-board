@@ -4,6 +4,7 @@ import axios from "axios";
 import { formatDistanceToNow } from "date-fns";
 import { Link } from "react-router-dom";
 import he from "he";
+import DOMPurify from "dompurify";
 
 import PaginationControls from "../components/PaginationControls";
 import PostContent from "../components/PostContent";
@@ -30,9 +31,16 @@ function ThreadPage() {
 
   const handleReply = async () => {
     if (!reply.trim()) return;
+
+    const safeReply = he.encode(reply);
+
+    const decoded = he.decode(safeReply);
+    const sanitized = DOMPurify.sanitize(decoded);
+
+    if (!sanitized.trim()) return;
+
     try {
       setLoading(true);
-      const safeReply = he.encode(reply);
       const res = await axios.post(`${API_URL}/reply`, {
         threadId: parseInt(id),
         content: safeReply,
