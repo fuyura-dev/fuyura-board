@@ -1,3 +1,5 @@
+const DOMpurify = require("isomorphic-dompurify");
+const he = require("he");
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -134,9 +136,22 @@ app.post("/reply", async (req, res) => {
   const { threadId, content } = req.body;
 
   try {
+    if (!content || typeof content !== "string") {
+      return res.status(400).json({ error: "Invalid content" });
+    }
+
+    const decoded = he.decode(content);
+    const sanitized = DOMpurify.sanitize(decoded);
+
+    if (!sanitized.trim()) {
+      return res.status(400).json({ error: "Invalid Reply Content" });
+    }
+
+    const safeContent = he.encode(sanitized);
+
     const [post] = await prisma.$transaction([
       prisma.post.create({
-        data: { threadId, content },
+        data: { threadId, content: safeContent },
       }),
       prisma.thread.update({
         where: { id: threadId },
